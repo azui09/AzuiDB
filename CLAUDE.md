@@ -23,9 +23,25 @@ Layout: `apps/api`, `apps/mobile`, `infra/`, `docs/`. Details in README.md.
 
 Two context sources, working as a second brain (zettelkasten):
 
-- `./docs` (in the repo): the project's truth. Architecture, data model, ADRs. Consult before deciding.
-- `~/Documents/Claude Memory` (Obsidian, outside the repo): what is not the project's. Session diary, mistakes, concepts learned, Claude Code discoveries, links between projects.
+- `./docs` (in the repo): the project's truth. Setup, architecture, data model, ADRs, environments.
+- `~/Documents/Claude Memory` (Obsidian vault, outside the repo): what is not the project's. Session diary, mistakes, concepts learned, Claude Code discoveries, links between projects.
 - **Only write to Obsidian when the user explicitly asks.** Never on your own initiative.
+
+### Docs are the source of truth
+
+- For anything about the project, `./docs` is the final word. **Whenever you do not know how to do something, or before deciding anything, check `./docs` first.** Do not guess and do not answer from memory when the docs cover it.
+- If the docs do not answer, ask the user, then record the answer in `./docs` (an ADR if it is a decision) so the same question is never asked twice.
+- If the docs and the code disagree, tell the user. Do not silently pick one.
+- An accepted ADR is not edited. To change a decision, write a new ADR that supersedes the old one.
+
+### Docs vs vault
+
+Rule of thumb: would someone who only cloned the repo need this to run, understand or change the project? Then it goes to `./docs`. Is it about the user (what they learned, where they went wrong, how Claude Code behaved)? Then it goes to the vault.
+
+- The repo must stand alone: `./docs` never links to or depends on the vault. The vault may link to `./docs`.
+- One event can produce both. The fact that stays true for the project (an ADR, a troubleshooting entry in `docs/setup.md`) goes to `./docs`. The lesson (what was learned, what went wrong) goes to the vault.
+- The vault is the single place for learning notes. Do not duplicate them in the git-ignored `./learning` folder.
+- The vault is written in English, like everything else in files.
 
 ## How to code here
 
