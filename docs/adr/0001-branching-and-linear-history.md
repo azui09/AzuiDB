@@ -22,6 +22,6 @@ AzuiDB is a study project, and the git history is also a record of how it was bu
 
 ## Consequences
 
-- Rebasing rewrites commit hashes. After a PR is merged, run `git pull` on the target branch **before** `git branch -d`, otherwise Git thinks the branch was not merged.
-- Rebasing a branch that was already pushed needs a force push (`--force-with-lease`). Do it only on your own feature branches.
+- Rebasing rewrites commit hashes. Until the target branch is pulled, Git does not recognize the merged feature branch as merged, so `git branch -d` refuses to delete it.
+- Rebasing a branch that was already pushed requires a force push (`--force-with-lease`), which is limited to a contributor's own feature branches.
 - The `staging` branch does not exist yet; it will be created together with the VPS ([ADR 0002](0002-staging-on-vps-with-compose.md)).
