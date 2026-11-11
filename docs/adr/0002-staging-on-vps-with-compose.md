@@ -5,7 +5,7 @@
 
 ## Context
 
-The `staging` branch needs a real, temporary deploy where changes are tested before reaching `main`. The project already uses Docker Compose, and the user wants to learn SSH, reverse proxies, TLS and deployment by doing. Kubernetes is planned for later (see the README roadmap), not now.
+The `staging` branch needs a real, temporary deploy where changes are tested before reaching `main`. The project already uses Docker Compose, and learning SSH, reverse proxies, TLS and deployment hands-on is part of the project's purpose. Kubernetes is planned for later (see the README roadmap), not now.
 
 ## Decision
 
@@ -28,6 +28,6 @@ The `staging` branch needs a real, temporary deploy where changes are tested bef
 - A Dockerfile for the API must exist before the first deploy. It is not written yet; it will also supersede [ADR 0003](0003-local-dev-api-on-host-postgres-in-compose.md).
 - The server must be maintained: OS updates, firewall, backups.
 - The same VPS can later host k3s.
-- Free-tier limits and Student Pack offers change; check them before depending on them. Oracle sign-up can reject cards, and ARM capacity can be out of stock in a region.
+- Free-tier limits and Student Pack offers change over time and need to be verified at provisioning. Oracle sign-up can reject some cards, and ARM capacity can be out of stock in a region.
 - Not decided here: where the production backend (`main`) runs.
 - Status of the work: the VPS is not provisioned yet.
