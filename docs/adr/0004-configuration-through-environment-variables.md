@@ -25,4 +25,3 @@ The same code must run locally, on staging and in production with different secr
 
 - The database password appears in two files (`infra/.env` and inside `DATABASE_URL`). Changing it means changing both.
 - Passwords in `DATABASE_URL` must avoid characters such as `@`, `:`, `/` and `#`.
-- Follow-up: `apps/api/config/settings.py` still has `default="sqlite:///db.sqlite3"` in `DATABASES`. It hid a missing `DATABASE_URL` once (`migrate` ran against SQLite). Removing that default makes the code match this decision.
