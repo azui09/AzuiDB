@@ -66,7 +66,7 @@ docker compose exec db psql -U azui -d azuidb -c '\dt'
 | Symptom | Cause and fix |
 | ------- | ------------- |
 | `That port is already in use` | Another process owns the port. Find it with `ss -ltnp \| grep :8000`. Either stop it or run on another port, e.g. `python manage.py runserver 8001`. For Postgres, stop the other container or change the host side of `127.0.0.1:5432:5432` in `infra/docker-compose.yml` (and the port in `DATABASE_URL`). |
-| `\dt` shows `Did not find any relations` after `migrate` | `DATABASE_URL` is missing from `apps/api/.env`, so Django fell back to SQLite and created `apps/api/db.sqlite3`. Delete that file, set the variable, run `migrate` again. See [ADR 0004](adr/0004-configuration-through-environment-variables.md). |
+| `ImproperlyConfigured: Set the DATABASE_URL environment variable` | `DATABASE_URL` is missing from `apps/api/.env`. There is deliberately no fallback database. See [ADR 0004](adr/0004-configuration-through-environment-variables.md). |
 | `DisallowedHost` | The host you used is not in `ALLOWED_HOSTS` in `apps/api/.env`. |
 | `ImproperlyConfigured: Set the SECRET_KEY environment variable` | `SECRET_KEY` is missing from `apps/api/.env`. |
 | `docker compose` says `set POSTGRES_PASSWORD in infra/.env` | `infra/.env` does not exist or has an empty variable. |
