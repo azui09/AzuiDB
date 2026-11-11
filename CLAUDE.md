@@ -33,6 +33,8 @@ Two context sources, working as a second brain (zettelkasten):
 - If the docs do not answer, ask the user, then record the answer in `./docs` (an ADR if it is a decision) so the same question is never asked twice.
 - If the docs and the code disagree, tell the user. Do not silently pick one.
 - An accepted ADR is not edited. To change a decision, write a new ADR that supersedes the old one.
+- ADR files are `docs/adr/NNNN-short-title.md`, numbered in sequence, with Status, Date, Context, Decision, Alternatives considered and Consequences.
+- Write `./docs` for an outside reader (a new contributor, or Claude Code itself): describe the project as it is. No instructions to whoever writes the docs and no meta rules (language, naming, ADR upkeep); those live here in CLAUDE.md.
 
 ### Docs vs vault
 
