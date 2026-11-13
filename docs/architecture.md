@@ -6,7 +6,7 @@ Status: early setup. Anything marked *planned* does not exist yet. The product d
 
 | Component | Tech | Where | Status |
 | --------- | ---- | ----- | ------ |
-| App | Expo (React Native + TypeScript) | `apps/mobile` | Planned, not created yet |
+| App | Expo (React Native + TypeScript) | `apps/mobile` | Expo Router app with one screen that checks `GET /api/health/` |
 | API | Django + Django REST Framework | `apps/api` | Health endpoint only (`GET /api/health/`) |
 | Database | PostgreSQL 17 | `db` service in `infra/docker-compose.yml` | Running locally |
 | Reverse proxy | Caddy | Staging VPS | Planned |
@@ -15,15 +15,22 @@ Status: early setup. Anything marked *planned* does not exist yet. The product d
 ## Local development
 
 ```
+Phone (Expo Go)
+   │  same local network
+   ▼
 Your machine
-├─ .venv  →  Django API   (python manage.py runserver, port 8000)
+├─ npm    →  Metro        (npx expo start, port 8081: serves the app bundle)
+├─ .venv  →  Django API   (python manage.py runserver 0.0.0.0:8000)
 └─ Docker →  PostgreSQL   (127.0.0.1:5432, volume db-data)
 ```
 
 | Port | Used by | Reachable from |
 | ---- | ------- | -------------- |
-| 8000 | Django `runserver` | your machine |
+| 8081 | Metro dev server | the local network (the phone downloads the app from it) |
+| 8000 | Django `runserver` | the local network when started on `0.0.0.0`, otherwise your machine only |
 | 5432 | PostgreSQL container | your machine only (bound to `127.0.0.1`) |
+
+The app finds the API through `EXPO_PUBLIC_API_URL` in `apps/mobile/.env`, set to the computer's LAN IP.
 
 Why the API is not in Compose yet: [ADR 0003](adr/0003-local-dev-api-on-host-postgres-in-compose.md). How configuration is passed: [ADR 0004](adr/0004-configuration-through-environment-variables.md).
 
