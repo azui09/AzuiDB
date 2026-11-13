@@ -1,12 +1,14 @@
 # Local setup
 
-Runs the API on your machine and PostgreSQL in Docker (see [ADR 0003](adr/0003-local-dev-api-on-host-postgres-in-compose.md)). The mobile app (`apps/mobile`) does not exist yet.
+Runs the API on your machine, PostgreSQL in Docker (see [ADR 0003](adr/0003-local-dev-api-on-host-postgres-in-compose.md)) and the mobile app on your phone through Expo Go.
 
 ## Prerequisites
 
 - Git
 - Python 3 (developed on 3.14)
 - Docker with the Compose plugin (`docker compose`)
+- Node.js (developed on 22) and npm
+- Expo Go on an Android or iOS phone
 
 ## 1. Database
 
@@ -60,6 +62,35 @@ Expected: `{"status":"ok"}`. To confirm the tables landed in Postgres:
 cd infra
 docker compose exec db psql -U azui -d azuidb -c '\dt'
 ```
+
+## 4. Mobile app
+
+The app calls the API from your phone, so the API must be reachable over the local network.
+
+Run the API on all interfaces instead of loopback only:
+
+```bash
+python manage.py runserver 0.0.0.0:8000
+```
+
+Find your computer's LAN IP (for example with `ip -4 addr`) and add it to `ALLOWED_HOSTS` in `apps/api/.env`, comma-separated without spaces: `localhost,127.0.0.1,192.168.0.10`.
+
+From `apps/mobile`:
+
+```bash
+npm install
+cp .env.example .env
+```
+
+Set `EXPO_PUBLIC_API_URL` in `apps/mobile/.env` to `http://<LAN IP>:8000`. `localhost` does not work: on the phone it means the phone itself. Variables prefixed with `EXPO_PUBLIC_` are embedded in the app bundle, so they are visible to anyone with the app and must never hold secrets. Restart the dev server after changing `.env`.
+
+```bash
+npx expo start
+```
+
+Scan the QR code with Expo Go. The home screen should show `API: ok`.
+
+The phone and the computer must be on the same network, and the computer's firewall must allow inbound connections on 8081 (Metro, the dev server that serves the app) and 8000 (the API). The LAN IP changes when you switch networks; update both `.env` files when it does.
 
 ## Troubleshooting
 
