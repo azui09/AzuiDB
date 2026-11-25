@@ -6,6 +6,7 @@ How to run AzuiDB, how it is put together, and why it is built that way.
 | -------- | -------------- |
 | [setup.md](setup.md) | Running the project locally |
 | [architecture.md](architecture.md) | Components and environments |
+| [steam-api.md](steam-api.md) | Steam endpoints used and how to handle their responses |
 | [adr/](adr) | Architecture Decision Records |
 
 ## Architecture Decision Records
