@@ -25,7 +25,24 @@ Two context sources, working as a second brain (zettelkasten):
 
 - `./docs` (in the repo): the project's truth. Setup, architecture, data model, ADRs, environments.
 - `~/Documents/Claude Memory` (Obsidian vault, outside the repo): what is not the project's. Session diary, mistakes, concepts learned, Claude Code discoveries, links between projects.
-- **Only write to Obsidian when the user explicitly asks.** Never on your own initiative.
+- **Only write to Obsidian when the user explicitly asks.** Never on your own initiative. The session-folder routine below is a standing request and needs no new ask.
+
+### Vault session folders
+
+The user reviews new vault notes session by session, through two folders at the vault root:
+
+- `Current Session/`: every new `.md` written in this session goes here, inside the same category subfolder it would otherwise use (`Concepts/`, `Diary/`, `Mistakes/`, `Claude Code/`). Wikilinks work by note name, so links do not break.
+- `Validated/`: notes the user has already read in Obsidian, same subfolders.
+- At the **start of every session**, before writing anything to the vault: move everything in `Current Session/` into `Validated/` (keeping the subfolders), then tell the user which notes were validated. The user starting a new session means they read them.
+- Edits to notes that already exist (for example the hub `Projects/AzuiDB.md`) stay in place. List them under "Edited" in that session's diary note so the user can find them.
+- Notes from before this routine stay in the old root folders (`Concepts/`, `Diary/`, ...); do not move them unless asked.
+
+### Handoff
+
+- `HANDOFF.md` at the vault root tells the next session where we stopped. There is only one: overwrite it, never move it into the session folders.
+- At the start of every session, read it right after this file, then read what it points to.
+- Keep it current during the session (sessions can end without warning), and always rewrite it before the session ends.
+- Contents: date, branch and state of the work, what was done, where we stopped, next steps, open questions, and which `./docs` files and vault notes to read first.
 
 ### Docs are the source of truth
 
